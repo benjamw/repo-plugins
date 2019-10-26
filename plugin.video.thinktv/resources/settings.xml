@@ -3,10 +3,14 @@
 
 	<category label="30015">
 		<setting type="sep" />
-		<setting id="enable_login" type ="bool" label="30018" default="false"/>
-  	     <setting id="login_name" type="text" label="30016" enable="!eq(-1,false)" default=""/>
-	     <setting id="login_pass" type="text" label="30017" enable="!eq(-1,)" option="hidden" default=""/>
-	     <setting id="pbsol" type="text" label="30019" enable="false" default=""/>
+		<setting id="alpha" type="bool" label="30052" default="true"/>
+		<setting type="sep" />
+		<setting id="enable_login" type="bool" label="30018" default="false"/>
+		 <setting id="login_name" type="text" label="30016" enable="!eq(-1,false)" default=""/>
+		 <setting id="login_pass" type="text" label="30017" enable="!eq(-1,)" option="hidden" default=""/>
+		 <setting id="pbsol" type="text" visible="false" default=""/>
+		 <setting id="station_id" type="text" visible="false" default=""/>
+		 <setting id="sta_extended" type="text" visible="false" default=""/>
 		<setting type="sep" />
 	</category>
 

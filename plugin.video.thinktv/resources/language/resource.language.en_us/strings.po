@@ -132,3 +132,8 @@ msgstr ""
 msgctxt "#30051"
 msgid "PBS Episode Search"
 msgstr ""
+
+msgctxt "#30052"
+msgid "Use Alphabetical Sorting"
+msgstr ""
+

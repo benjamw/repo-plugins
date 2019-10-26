@@ -4,6 +4,8 @@ plugin.video.thinktv
 Kodi Video Addon for PBS ThinkTV
 For Kodi Krypton and above releases
 
+version 3.0.18 fixes for api changes and login issues and remove t1m dependencies
+version 3.0.17 fixes for api changes
 version 3.0.16 fixes for website changes
 version 3.0.15 fixes for displaying episodes - thanks to Brian Murrell
 version 3.0.14 fix getvideo for new api
