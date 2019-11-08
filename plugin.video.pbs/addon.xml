@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.pbs" name="PBS" version="1.0.0" provider-name="bjm">
+	<requires>
+		<import addon="xbmc.python" version="2.25.0"/>
+		<import addon="inputstream.adaptive" version="2.0.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="addon.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary lang="en_GB">PBS</summary>
+		<description lang="en_GB">Allows access to PBS streaming content</description>
+		<license>GNU General Public License, v2</license>
+		<language>en</language>
+		<forum></forum>
+		<source>https://github.com/benjamw/plugins.video.pbs</source>
+		<website>Kodi.tv</website>
+		<email></email>
+		<assets>
+			<icon>resources/icon.png</icon>
+			<fanart>resources/fanart.jpg</fanart>
+		</assets>
+	</extension>
+</addon>

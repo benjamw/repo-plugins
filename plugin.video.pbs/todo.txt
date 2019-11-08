@@ -1,0 +1,15 @@
+create a module that talks with the API, and returns the data as objects
+
+create a different module that takes in objects and uses them to create the menu items
+this module will talk to the first module and progress the flow forward
+
+PBS Module
+-----------------------
+get shows
+get show episodes
+get videos
+get favorites
+add favorite
+
+this may have a state? so it will know where it is when it's asked for page 2?
+or the Kodi side module will know where it is, and just ask the PBS module for the next dataset

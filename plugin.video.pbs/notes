@@ -1,0 +1,87 @@
+Login:
+
+Main URL: GET- https://www.pbs.org/
+	Element: .sign-in__link--pbs
+	HREF: https://account.pbs.org/oauth2/authorize/?scope=account+vppa&amp;redirect_uri=https://www.pbs.org/login/&amp;response_type=code&amp;client_id=LXLFIaXOVDsfS850bnvsxdcLKlvLStjRBoBWbFRE
+
+Start OAuth URL: GET- https://account.pbs.org/oauth2/authorize/?scope=account+vppa&amp;redirect_uri=https://www.pbs.org/login/&amp;response_type=code&amp;client_id=LXLFIaXOVDsfS850bnvsxdcLKlvLStjRBoBWbFRE
+Response:
+	Location: /oauth2/login/?next=/oauth2/authorize/%3Fscope%3Daccount%2Bvppa%26redirect_uri%3Dhttps%3A//www.pbs.org/login/%26response_type%3Dcode%26client_id%3DLXLFIaXOVDsfS850bnvsxdcLKlvLStjRBoBWbFRE
+
+OAuth Token URL: GET- https://account.pbs.org/oauth2/login/?next=/oauth2/authorize/%3Fscope%3Daccount%2Bvppa%26redirect_uri%3Dhttps%3A//www.pbs.org/login/%26response_type%3Dcode%26client_id%3DLXLFIaXOVDsfS850bnvsxdcLKlvLStjRBoBWbFRE
+Response:
+	Set-Cookie: csrftoken=XkxFJOD3PDMeYeYeMvhNZhdY6Vc4XFlYbbbeb69noLxhbhsxmzu8TzNHzhjJwXCt; expires=Tue, 21-Jul-2020 16:26:28 GMT; Max-Age=31449600; Path=/
+	Get csrfmiddlewaretoken from the form element
+
+OAuth Login URL: POST- https://account.pbs.org/oauth2/login/
+Form-Data:
+	csrfmiddlewaretoken=PgjHW8sxe6Z6Tt0qZa9OgAJEEXcjZyhNQh9P3f8XQCOdrdXQB2beTTFyq4vX19Da
+	&next=%2Foauth2%2Fauthorize%2F%3Fscope%3Daccount%2Bvppa%26redirect_uri%3Dhttps%3A%2F%2Fwww.pbs.org%2Flogin%2F%26response_type%3Dcode%26client_id%3DLXLFIaXOVDsfS850bnvsxdcLKlvLStjRBoBWbFRE%26confirmed%3D1
+	&station=
+	&email=chelseawelker%40gmail.com
+	&password=Nova%218166
+	&keep_logged_in=on
+Cookies:
+	pbsol.sta_extended=z%3D45402%23t%3Db%23s%3D%5B%22WPTD%22%2C%22WCET%22%2C%22WKLE%22%2C%22WIPB%22%5D%23st%3DOH%23co%3DUS%23sid%3D%5B%227bad8720-1c01-4189-ad48-4b203e571b94%22%2C%22c9f75fe6-8da0-4bcb-a085-531edb49ca89%22%2C%2261059d95-3011-4270-b9d1-17b88ca25b13%22%2C%22ab7e7061-dee0-4905-bf2c-5acd1888ace0%22%5D;
+	pbs.preventOverlays=1;
+	pbsol.common.name.short=KUED;
+	pbsol.common.name=KUED Channel 7;
+	pbsol.station=KUED;
+	pbsol.station_id=b0784447-7908-43f6-b188-9d6a30102ea3;
+	pbskids.localized=KUED;
+	csrftoken=BWcT4iVVqTwdvvXJtI7kFcFtx1e8a87fCX21bpBl2plk3fU95A9KivBnj8xMcJtC;
+	pbsol.redirect_url=https://www.pbs.org/;
+	tmp_campaign_info=LNK
+Response:
+	Location: /oauth2/authorize/?scope=account+vppa&redirect_uri=https://www.pbs.org/login/&response_type=code&client_id=LXLFIaXOVDsfS850bnvsxdcLKlvLStjRBoBWbFRE&confirmed=1
+	Set-Cookie: csrftoken=nvganuQCGg2eha6qrvjvOHm9Y4O07RiWETE90bDkyPuMl8H1AvEyeTb59Cwr1tL3; expires=Tue, 21-Jul-2020 15:42:38 GMT; Max-Age=31449600; Path=/
+	Set-Cookie: sessionid=t2t1upfho4mrzmq29oky4vd4tge1ctmw; expires=Tue, 06-Aug-2019 15:42:38 GMT; httponly; Max-Age=1209600; Path=/
+
+Auth URL: GET- https://account.pbs.org/oauth2/authorize/?scope=account+vppa&redirect_uri=https://www.pbs.org/login/&response_type=code&client_id=LXLFIaXOVDsfS850bnvsxdcLKlvLStjRBoBWbFRE&confirmed=1
+Cookies:
+	pbsol.sta_extended=z%3D45402%23t%3Db%23s%3D%5B%22WPTD%22%2C%22WCET%22%2C%22WKLE%22%2C%22WIPB%22%5D%23st%3DOH%23co%3DUS%23sid%3D%5B%227bad8720-1c01-4189-ad48-4b203e571b94%22%2C%22c9f75fe6-8da0-4bcb-a085-531edb49ca89%22%2C%2261059d95-3011-4270-b9d1-17b88ca25b13%22%2C%22ab7e7061-dee0-4905-bf2c-5acd1888ace0%22%5D;
+	pbs.preventOverlays=1;
+	pbsol.common.name.short=KUED;
+	pbsol.common.name=KUED Channel 7;
+	pbsol.station=KUED;
+	pbsol.station_id=b0784447-7908-43f6-b188-9d6a30102ea3;
+	pbskids.localized=KUED;
+	pbsol.redirect_url=https://www.pbs.org/;
+	tmp_campaign_info=LNK;
+	csrftoken=nvganuQCGg2eha6qrvjvOHm9Y4O07RiWETE90bDkyPuMl8H1AvEyeTb59Cwr1tL3;
+	sessionid=t2t1upfho4mrzmq29oky4vd4tge1ctmw
+Response:
+	Location: https://www.pbs.org/login/?code=C35pP112vtBAotG9pnz9bznCeqfIUe
+	Set-Cookie: sessionid=t2t1upfho4mrzmq29oky4vd4tge1ctmw; expires=Tue, 06-Aug-2019 15:42:38 GMT; httponly; Max-Age=1209600; Path=/
+
+Login URL: GET- https://www.pbs.org/login/?code=C35pP112vtBAotG9pnz9bznCeqfIUe
+Cookies:
+	pbsol.sta_extended=z%3D45402%23t%3Db%23s%3D%5B%22WPTD%22%2C%22WCET%22%2C%22WKLE%22%2C%22WIPB%22%5D%23st%3DOH%23co%3DUS%23sid%3D%5B%227bad8720-1c01-4189-ad48-4b203e571b94%22%2C%22c9f75fe6-8da0-4bcb-a085-531edb49ca89%22%2C%2261059d95-3011-4270-b9d1-17b88ca25b13%22%2C%22ab7e7061-dee0-4905-bf2c-5acd1888ace0%22%5D;
+	pbs.preventOverlays=1;
+	pbsol.common.name.short=KUED;
+	pbsol.common.name=KUED Channel 7;
+	pbsol.station=KUED;
+	pbsol.station_id=b0784447-7908-43f6-b188-9d6a30102ea3;
+	pbskids.localized=KUED;
+	sessionid=r6vkh5u0jlzdp4vjw7d7jimh7aq19khu;
+	pbsol.redirect_url=https://www.pbs.org/;
+	tmp_campaign_info=LNK
+Response:
+	Location: https://www.pbs.org/
+	Set-Cookie: tmp_data_video=""; Domain=.pbs.org; expires=Thu, 01-Jan-1970 00:00:00 GMT; Max-Age=0; Path=/
+	Set-Cookie: tmp_data_programs=""; Domain=.pbs.org; expires=Thu, 01-Jan-1970 00:00:00 GMT; Max-Age=0; Path=/
+	Set-Cookie: tmp_campaign_info=""; Domain=.pbs.org; expires=Thu, 01-Jan-1970 00:00:00 GMT; Max-Age=0; Path=/
+	Set-Cookie: pbsol.redirect_url=""; Domain=.pbs.org; expires=Thu, 01-Jan-1970 00:00:00 GMT; Max-Age=0; Path=/
+	Set-Cookie: pbs_uid=b3474077-2584-47d5-8be2-b9a4ad644e33; Domain=.pbs.org; expires=Thu, 22-Aug-2019 15:42:38 GMT; Max-Age=2592000; Path=/
+	Set-Cookie: pbsol.station=KUED; Domain=.pbs.org; expires=Thu, 22-Aug-2019 15:42:38 GMT; Max-Age=2592000; Path=/
+	Set-Cookie: pbsol.station_id=b0784447-7908-43f6-b188-9d6a30102ea3; Domain=.pbs.org; expires=Thu, 22-Aug-2019 15:42:38 GMT; Max-Age=2592000; Path=/
+	Set-Cookie: sessionid=r6vkh5u0jlzdp4vjw7d7jimh7aq19khu; expires=Tue, 06-Aug-2019 15:42:39 GMT; HttpOnly; Max-Age=1209600; Path=/
+
+
+
+
+
+
+
+NOTES:
+- https://github.com/romanvm/kodi.web-pdb
