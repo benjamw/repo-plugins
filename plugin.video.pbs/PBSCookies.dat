@@ -1,5 +1,0 @@
-#LWP-Cookies-2.0
-Set-Cookie3: pbs_uid="b3474077-2584-47d5-8be2-b9a4ad644e33"; path="/"; domain=".pbs.org"; path_spec; domain_dot; expires="2019-12-02 08:17:43Z"; version=0
-Set-Cookie3: pbsol.station=KUED; path="/"; domain=".pbs.org"; path_spec; domain_dot; expires="2019-12-02 08:17:43Z"; version=0
-Set-Cookie3: pbsol.station_id="b0784447-7908-43f6-b188-9d6a30102ea3"; path="/"; domain=".pbs.org"; path_spec; domain_dot; expires="2019-12-02 08:17:43Z"; version=0
-Set-Cookie3: sessionid=3ug77j36zxmqzfyp6s5tuyf4po37iven; path="/"; domain="www.pbs.org"; path_spec; expires="2019-11-16 08:17:43Z"; HttpOnly=None; version=0
