@@ -136,3 +136,7 @@ msgstr ""
 msgctxt "#30052"
 msgid "Sort Alphabetically"
 msgstr ""
+
+msgctxt "#30053"
+msgid "ERROR: Video ID not found"
+msgstr ""

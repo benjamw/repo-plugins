@@ -12,9 +12,9 @@ import xbmcgui
 import xbmcplugin
 
 from resources.lib.pbs import (PBS, PBSSettings)
+import constants as c
 
-UTF8 = 'utf-8'
-
+import web_pdb
 
 class PBSAddon:
 
@@ -25,9 +25,9 @@ class PBSAddon:
         self.addon = xbmcaddon.Addon('plugin.video.pbs')
         self.addonName = self.addon.getAddonInfo('name')
         self.l10n = self.addon.getLocalizedString
-        self.homeDir = self.addon.getAddonInfo('path').decode(UTF8)
-        self.addonIcon = xbmc.translatePath(self.addon.getAddonInfo('icon')).decode(UTF8)
-        self.addonFanart = xbmc.translatePath(self.addon.getAddonInfo('fanart')).decode(UTF8)
+        self.homeDir = self.addon.getAddonInfo('path').decode(c.UTF8)
+        self.addonIcon = xbmc.translatePath(self.addon.getAddonInfo('icon')).decode(c.UTF8)
+        self.addonFanart = xbmc.translatePath(self.addon.getAddonInfo('fanart')).decode(c.UTF8)
 
         self.default_vid_stream = {
             'codec': 'h264',
@@ -58,13 +58,13 @@ class PBSAddon:
         return
 
     def get_settings(self):
-        profile = self.addon.getAddonInfo('profile').decode(UTF8)
-        pro_dir = xbmc.translatePath(profile).decode(UTF8)
+        profile = self.addon.getAddonInfo('profile').decode(c.UTF8)
+        pro_dir = xbmc.translatePath(profile).decode(c.UTF8)
 
         if not os.path.isdir(pro_dir):
             os.makedirs(pro_dir)
 
-        self.cj_file = xbmc.translatePath(os.path.join(profile, 'PBSCookies.dat')).decode(UTF8)
+        self.cj_file = xbmc.translatePath(os.path.join(profile, 'PBSCookies.dat')).decode(c.UTF8)
 
         self.alpha = self.addon.getSetting('alpha')
         self.enable_login = self.addon.getSetting('enable_login')
@@ -102,23 +102,17 @@ class PBSAddon:
         items = self.pbs.get_shows(genre, page)
 
         for item in items.get('items', []):
-            info = {
-                'TVShowTitle': item['title'],
-                'Title': item['title'],
-                'Studio': item.get('producer'),
-                'Episode': item.get('video_count'),
-                'Plot': item.get('description'),
-            }
-            genres = item.get('genre_titles')
-            if genres != [] and genres is not None:
-                info['Genre'] = genres[0]
-
-            i_list = self.add_menu_item(item['title'], 'GY', i_list, str(item['slug']), item.get('image'),
-                                        item.get('image'), info)
+            i_list = self.add_show_items(i_list, item, 'favorites' == genre)
 
         if items.get('page', 1) < items.get('pages', 1):
+            # some of the URLs return 1-indexed pages, and some don't
+            # fix any that do here
+            # the ones that don't are fixed in the PBS class methods that return the data
+            if items.get('page0', False):
+                page += 1
+
             # Next Page
-            i_list = self.add_menu_item(self.l10n(30050), 'GS', i_list, '{}|{!s}'.format(genre, page + 1))
+            i_list = self.add_menu_item(self.l10n(30050), 'GS', i_list, '{}|{!s}'.format(genre, page))
 
         return i_list
 
@@ -147,10 +141,7 @@ class PBSAddon:
 
         # return the episodes (specials)
         for item in items.get('items', []):
-            info = self.process_video_info(item)
-
-            i_list = self.add_menu_item(item['title'], 'GV', i_list, str(item['tp_media_id']), video_info=info,
-                                        is_folder=False)
+            i_list = self.add_video_item(i_list, item)
 
         if items.get('has_next', False):
             i_list = self.add_menu_item(self.l10n(30050), 'GP', i_list,
@@ -166,11 +157,7 @@ class PBSAddon:
         items = self.pbs.get_episodes(show_slug, season_cid, page)
 
         for item in items.get('items', []):
-            info = self.process_video_info(item)
-            image = item.get('image', None)
-
-            i_list = self.add_menu_item(item['title'], 'GV', i_list, str(item['tp_media_id']), thumb=image,
-                                        video_info=info, is_folder=False)
+            i_list = self.add_video_item(i_list, item)
 
         if items.get('has_next', False):
             i_list = self.add_menu_item(self.l10n(30050), 'GE', i_list,
@@ -185,10 +172,7 @@ class PBSAddon:
         items = self.pbs.get_fav_videos(page)
 
         for item in items.get('items', []):
-            info = self.process_video_info(item)
-
-            i_list = self.add_menu_item(item['title'], 'GV', i_list, str(item['tp_media_id']), video_info=info,
-                                        is_folder=False)
+            i_list = self.add_video_item(i_list, item, remove=True)
 
         if items.get('has_next', False):
             i_list = self.add_menu_item(self.l10n(30050), 'GW', i_list, str(page + 1))
@@ -215,10 +199,25 @@ class PBSAddon:
 
         xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, li)
 
+    # mode = DF
+    def do_function(self, data):
+        func, url = data.split('|')
+        add = ('A' == func[1:2])
+
+        msg = 'Not Attempted'
+        if 'P' == func[:1]:  # programs ???
+            msg = self.pbs.update_fav_program(add, url)
+        elif 'S' == func[:1]:  # shows, like Nova or Nature
+            msg = self.pbs.update_fav_shows(add, url)
+        elif 'V' == func[:1]:  # videos, like individual episodes of shows
+            msg = self.pbs.update_fav_videos(add, url)
+
+        xbmc.executebuiltin('XBMC.Notification("%s", "%s", %s)' % (self.addonName, msg, 4000))
+
     def convert_subtitles(self, sub_url):
         sub_file = ''
         if sub_url != '':
-            profile = self.addon.getAddonInfo('profile').decode(UTF8)
+            profile = self.addon.getAddonInfo('profile').decode(c.UTF8)
             pro_dir = xbmc.translatePath(os.path.join(profile))
             if not os.path.isdir(pro_dir):
                 os.makedirs(pro_dir)
@@ -298,7 +297,7 @@ class PBSAddon:
             params = dict(arg.split('=') for arg in ((sys.argv[2][1:]).split('&')))
             for key in params:
                 try:
-                    params[key] = urllib.unquote_plus(params[key]).decode(UTF8)
+                    params[key] = urllib.unquote_plus(params[key]).decode(c.UTF8)
                 except:
                     pass
         except:
@@ -339,6 +338,7 @@ class PBSAddon:
             self.start_show(p('url'))
 
         elif mode == 'DF':
+            web_pdb.set_trace()
             self.do_function(p('url'))
 
         return p
@@ -360,14 +360,43 @@ class PBSAddon:
 
             xbmcplugin.endOfDirectory(int(sys.argv[1]), cacheToDisc=cache)
 
-    def process_video_info(self, item):
+    def add_show_items(self, i_list, item, remove=False):
+        info = {
+            'TVShowTitle': item['title'],
+            'Title': item['title'],
+            'Studio': item.get('producer'),
+            'Episode': item.get('video_count'),
+            'Plot': item.get('description'),
+        }
+        genres = item.get('genre_titles')
+        if genres != [] and genres is not None:
+            info['Genre'] = genres[0]
+
+        image = item.get('image', None)
+
+        context_menu = None
+        if item.get('cid') is not None:
+            cid = item['cid']
+
+            url = 'SR' if remove else 'SA'
+            lang = 30006 if remove else 30007
+            context_menu = [(self.l10n(lang), 'XBMC.RunPlugin({}?mode=DF&url={}%7C{})'.format(sys.argv[0], url, cid))]
+
+        i_list = self.add_menu_item(item['title'], 'GY', i_list, str(item['slug']), image, image, info, cm=context_menu)
+
+        return i_list
+
+    def add_video_item(self, i_list, item, remove=False):
+        if item.get('tp_media_id') is None:
+            xbmc.executebuiltin('XBMC.Notification("%s", "%s", %s)' % (self.addonName, self.l10n(30053), 4000))
+
         description = ''
         if item.get('expire_date', None) is not None:
             description += 'Expires: {}\n'.format(re.compile(r'^(\d{4}-\d{2}-\d{2})')
                                                   .search(item['expire_date']).group(1))
         description += item.get('description', '')
 
-        return {
+        info = {
             'episode': item.get('episode', ''),
             'season': item.get('season', ''),
             'plot': description,
@@ -378,5 +407,20 @@ class PBSAddon:
             'mediatype': item.get('type', ''),
             'year': re.compile(r'^(\d{4})').search(item.get('premiere_date', '')).group(1),
         }
+
+        image = item.get('image', None)
+
+        context_menu = None
+        if item.get('cid') is not None:
+            cid = item['cid']
+
+            url = 'VR' if remove else 'VA'
+            lang = 30009 if remove else 30008
+            context_menu = [(self.l10n(lang), 'XBMC.RunPlugin({}?mode=DF&url={}%7C{})'.format(sys.argv[0], url, cid))]
+
+        i_list = self.add_menu_item(item['title'], 'GV', i_list, str(item['tp_media_id']), image, image, info,
+                                    cm=context_menu, is_folder=False)
+
+        return i_list
 
 # end
